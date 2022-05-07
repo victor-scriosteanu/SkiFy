@@ -92,7 +92,7 @@ class _StartScreenState extends State<StartScreen> {
           shape: CircularNotchedRectangle(),
           color: Colors.white,
           child: Container(
-            height: 56,
+            height: 45,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[

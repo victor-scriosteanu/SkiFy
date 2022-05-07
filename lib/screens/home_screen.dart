@@ -103,9 +103,6 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     location.enableBackgroundMode(enable: true);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Flutter TextField Example'),
-      ),
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
@@ -125,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       data.speed, data.longitude, data.latitude, data.altitude);
                   time_session.updateTime(widget.stopwatch, widget.session);
                   return GridView(
-                    padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(0, 100, 0, 0),
                     gridDelegate:
                         const SliverGridDelegateWithMaxCrossAxisExtent(
                             maxCrossAxisExtent: 200,
@@ -377,7 +374,7 @@ class _HomeScreenState extends State<HomeScreen> {
           shape: CircularNotchedRectangle(),
           color: Colors.white,
           child: Container(
-            height: 56,
+            height: 45,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[

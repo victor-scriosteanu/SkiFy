@@ -101,9 +101,6 @@ class _PauseScreenState extends State<PauseScreen> {
       // print(currentUser.uid);
     }
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Flutter TextField Example'),
-      ),
       body: Stack(
         alignment: Alignment.bottomRight,
         children: [
@@ -128,7 +125,7 @@ class _PauseScreenState extends State<PauseScreen> {
                         time_session.updateTime(
                             widget.stopwatch, widget.session);
                         return GridView(
-                          padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
+                          padding: const EdgeInsets.fromLTRB(0, 100, 0, 0),
                           gridDelegate:
                               const SliverGridDelegateWithMaxCrossAxisExtent(
                                   maxCrossAxisExtent: 200,
@@ -415,7 +412,7 @@ class _PauseScreenState extends State<PauseScreen> {
           shape: const CircularNotchedRectangle(),
           // ignore: sized_box_for_whitespace
           child: Container(
-            height: 56,
+            height: 45,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
