@@ -67,8 +67,8 @@ class _StartScreenState extends State<StartScreen> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: SizedBox(
-        width: 100,
-        height: 100,
+        width: 90,
+        height: 90,
         child: FittedBox(
           child: FloatingActionButton(
             onPressed: () {

@@ -101,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (currentUser != null) {
       //print(currentUser.uid);
     }
-
+    location.enableBackgroundMode(enable: true);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Flutter TextField Example'),
