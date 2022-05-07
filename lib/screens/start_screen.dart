@@ -8,7 +8,7 @@ import 'package:skify1/services/ski_resort_service.dart';
 import 'package:uuid/uuid.dart';
 import '../reusable_widgets/reusable_widget.dart';
 import '../utils/color_utils.dart';
-import 'home_screen.dart';
+import 'stats_screen.dart';
 
 class StartScreen extends StatefulWidget {
   const StartScreen({Key? key}) : super(key: key);

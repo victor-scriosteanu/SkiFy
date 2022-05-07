@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:skify1/screens/home_screen.dart';
+import 'package:skify1/screens/stats_screen.dart';
 import 'package:skify1/screens/signin_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:skify1/screens/start_screen.dart';

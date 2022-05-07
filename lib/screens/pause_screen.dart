@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:skify1/services/max_speed_service.dart';
-import 'package:skify1/screens/home_screen.dart';
+import 'package:skify1/screens/stats_screen.dart';
 import 'package:skify1/screens/start_screen.dart';
 import 'package:skify1/services/time_session_service.dart';
 import 'package:skify1/services/total_distance_service.dart';

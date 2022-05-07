@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:skify1/reusable_widgets/reusable_widget.dart';
-import 'package:skify1/screens/home_screen.dart';
+import 'package:skify1/screens/stats_screen.dart';
 import 'package:skify1/screens/pause_screen.dart';
 import 'package:skify1/screens/reset_password.dart';
 import 'package:skify1/screens/signup_screen.dart';
