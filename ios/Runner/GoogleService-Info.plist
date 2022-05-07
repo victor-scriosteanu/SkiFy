@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>82298309205-5prjg0jl1a5q94qnv4s7672a9s8fk8hs.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.82298309205-5prjg0jl1a5q94qnv4s7672a9s8fk8hs</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>82298309205-8mth780mg2lmptnfpvu88kc6glsphkv6.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDEtWsPjU6nu2PjqZ5aNU6MuHaYLB55M5c</string>
+	<key>GCM_SENDER_ID</key>
+	<string>82298309205</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.skify1</string>
+	<key>PROJECT_ID</key>
+	<string>skify1</string>
+	<key>STORAGE_BUCKET</key>
+	<string>skify1.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:82298309205:ios:58c89be26f076a502f62dc</string>
+	<key>DATABASE_URL</key>
+	<string>https://skify1-default-rtdb.europe-west1.firebasedatabase.app</string>
+</dict>
+</plist>

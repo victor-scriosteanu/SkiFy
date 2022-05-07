@@ -1,0 +1,6 @@
+package com.example.skify1
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity: FlutterActivity() {
+}

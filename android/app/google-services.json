@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "82298309205",
+    "project_id": "skify1",
+    "storage_bucket": "skify1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:82298309205:android:d2564243841ac6002f62dc",
+        "android_client_info": {
+          "package_name": "com.example.skify1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "82298309205-8mth780mg2lmptnfpvu88kc6glsphkv6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.skify1",
+            "certificate_hash": "99301c776818d15d4618ee9a6fb75fc35d252240"
+          }
+        },
+        {
+          "client_id": "82298309205-vvmd9vla6ufqu8f49efdf38ipt0or99b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDW-qr42czZnr9MpEavpBFRTkJZMHF1ALQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "82298309205-vvmd9vla6ufqu8f49efdf38ipt0or99b.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "82298309205-5prjg0jl1a5q94qnv4s7672a9s8fk8hs.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.skify1"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
