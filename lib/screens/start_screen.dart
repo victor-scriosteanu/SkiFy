@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:skify1/screens/history_scrren.dart';
 import 'package:skify1/screens/signin_screen.dart';
+import 'package:skify1/services/energy_service.dart';
 import 'package:skify1/services/ski_resort_service.dart';
 import 'package:uuid/uuid.dart';
 import '../reusable_widgets/reusable_widget.dart';
 import '../utils/color_utils.dart';
 import 'stats_screen.dart';
+import 'package:skify1/services/energy_service.dart';
 
 class StartScreen extends StatefulWidget {
   const StartScreen({Key? key}) : super(key: key);

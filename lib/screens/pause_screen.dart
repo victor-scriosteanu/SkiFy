@@ -4,11 +4,13 @@ import 'package:location/location.dart';
 import 'package:skify1/services/max_speed_service.dart';
 import 'package:skify1/screens/stats_screen.dart';
 import 'package:skify1/screens/start_screen.dart';
+import 'package:skify1/services/save_service.dart';
 import 'package:skify1/services/time_session_service.dart';
 import 'package:skify1/services/total_distance_service.dart';
 import 'package:skify1/services/vertical_service.dart';
 import 'package:skify1/reusable_widgets/duration_h_format.dart';
 import 'package:skify1/services/runs_service.dart';
+import 'package:skify1/services/energy_service.dart';
 
 import '../utils/color_utils.dart';
 
@@ -48,6 +50,8 @@ class _PauseScreenState extends State<PauseScreen> {
   late double verticalCheck;
   int runs = 0;
   late int runsCheck;
+  int cal = 0;
+  late int calCheck;
 
   Future<void> locPermission() async {
     _serviceEnabled = await location.serviceEnabled();
@@ -81,11 +85,14 @@ class _PauseScreenState extends State<PauseScreen> {
         (await max_speed.checkMaxSpeed(speed, false, widget.session))!;
     runsCheck =
         (await runs_service.checkRuns(altitude, false, widget.session))!;
+    calCheck =
+        (await energy_service.checkEnergy(widget.stopwatch, widget.session));
     setState(() {
       vertical = verticalCheck;
       distance = distanceCheck;
       maxSpeed = maxSpeedCheck;
       runs = runsCheck;
+      cal = calCheck;
     });
   }
 
@@ -332,7 +339,7 @@ class _PauseScreenState extends State<PauseScreen> {
                                     padding:
                                         const EdgeInsets.fromLTRB(2, 30, 2, 0),
                                     child: Text(
-                                      '${(widget.stopwatch.elapsedMilliseconds / 1000 * 0.1).round()} cal',
+                                      '$cal cal',
                                       textAlign: TextAlign.center,
                                       style: const TextStyle(
                                         fontWeight: FontWeight.bold,
@@ -380,6 +387,7 @@ class _PauseScreenState extends State<PauseScreen> {
               heroTag: null, //Must be null to avoid hero animation errors
               child: const Icon(Icons.flag, size: 35),
               onPressed: () {
+                save_service.save(widget.session);
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) => StartScreen()));
               },
@@ -395,6 +403,7 @@ class _PauseScreenState extends State<PauseScreen> {
           child: FloatingActionButton(
             onPressed: () {
               widget.stopwatch.start();
+
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(

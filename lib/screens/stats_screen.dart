@@ -12,6 +12,7 @@ import '../utils/color_utils.dart';
 import 'package:skify1/services/total_distance_service.dart';
 import 'package:skify1/services/time_session_service.dart';
 import 'package:skify1/reusable_widgets/duration_h_format.dart';
+import 'package:skify1/services/energy_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key, this.skiResort, this.session, this.stopwatch})
@@ -49,6 +50,8 @@ class _HomeScreenState extends State<HomeScreen> {
   late double verticalCheck;
   int runs = 0;
   late int runsCheck;
+  int cal = 0;
+  late int calCheck;
 
   Future<void> locPermission() async {
     _serviceEnabled = await location.serviceEnabled();
@@ -82,11 +85,14 @@ class _HomeScreenState extends State<HomeScreen> {
     maxSpeedCheck =
         (await max_speed.checkMaxSpeed(speed, true, widget.session))!;
     runsCheck = (await runs_service.checkRuns(altitude, true, widget.session))!;
+    calCheck =
+        (await energy_service.checkEnergy(widget.stopwatch, widget.session));
     setState(() {
       vertical = verticalCheck;
       distance = distanceCheck;
       maxSpeed = maxSpeedCheck;
       runs = runsCheck;
+      cal = calCheck;
     });
   }
 
@@ -313,7 +319,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Padding(
                               padding: const EdgeInsets.fromLTRB(2, 30, 2, 0),
                               child: Text(
-                                '${(widget.stopwatch.elapsedMilliseconds / 1000 * 0.1).round()} cal',
+                                '$cal cal',
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
