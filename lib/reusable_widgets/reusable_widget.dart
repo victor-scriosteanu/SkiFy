@@ -10,14 +10,14 @@ Image logoWidget(String imageName) {
   );
 }
 
-Image skiButtonWidget(String imageName) {
-  return Image.asset(
-    imageName,
-    fit: BoxFit.fitWidth,
-    width: 32,
-    height: 32,
-    color: Colors.white,
-  );
+Image skiButtonWidget(String imageName, bool isButtonActive) {
+  return Image.asset(imageName,
+      fit: BoxFit.fitWidth,
+      width: 32,
+      height: 32,
+      color: isButtonActive
+          ? Color.fromARGB(255, 255, 255, 255)
+          : Color.fromARGB(255, 164, 164, 164));
 }
 
 TextField reusableTextFieldStart(String text, IconData icon,

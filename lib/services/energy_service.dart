@@ -46,6 +46,10 @@ class energy_service {
         print(x.value);
         energy = energy + x.value;
       });
+      if (energy == 0) {
+        ref.set((time.elapsedMilliseconds / 1000 * 0.1).round());
+        return ((time.elapsedMilliseconds / 1000 * 0.1).round());
+      }
       print(energy.round());
       ref.set(energy.round());
       return energy.round();

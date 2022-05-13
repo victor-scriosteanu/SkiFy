@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:skify1/screens/history_scrren.dart';
+import 'package:skify1/screens/history_screen.dart';
 import 'package:skify1/screens/signin_screen.dart';
 import 'package:skify1/services/energy_service.dart';
 import 'package:skify1/services/ski_resort_service.dart';
@@ -21,11 +21,27 @@ class StartScreen extends StatefulWidget {
 
 class _StartScreenState extends State<StartScreen> {
   final _locationController = TextEditingController();
+  bool isButtonActive = false;
   String skiResort = '';
   var uuid = const Uuid();
   final stopwatch = Stopwatch();
   var currentUser = FirebaseAuth.instance.currentUser;
   var session;
+  @override
+  void initState() {
+    super.initState();
+    _locationController.addListener(() {
+      setState(() {
+        isButtonActive = _locationController.text.isNotEmpty;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _locationController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,21 +89,11 @@ class _StartScreenState extends State<StartScreen> {
         height: 90,
         child: FittedBox(
           child: FloatingActionButton(
-            onPressed: () {
-              stopwatch.start();
-              skiResort = _locationController.text;
-              session = uuid.v1();
-              ski_resort.updateSkiResort(skiResort, session);
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => HomeScreen(
-                          skiResort: skiResort,
-                          session: session,
-                          stopwatch: stopwatch)));
-            },
-            child: skiButtonWidget('assets/images/skis.png'),
-          ),
+              onPressed: isButtonActive ? () => submitData() : null,
+              child: skiButtonWidget('assets/images/skis.png', isButtonActive),
+              backgroundColor: isButtonActive
+                  ? Colors.blue
+                  : Color.fromARGB(255, 26, 113, 184)),
         ),
       ),
       bottomNavigationBar: BottomAppBar(
@@ -122,5 +128,18 @@ class _StartScreenState extends State<StartScreen> {
             ),
           )),
     );
+  }
+
+  submitData() {
+    stopwatch.start();
+    skiResort = _locationController.text;
+    session = uuid.v1();
+
+    ski_resort.updateSkiResort(skiResort, session);
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => HomeScreen(
+                skiResort: skiResort, session: session, stopwatch: stopwatch)));
   }
 }

@@ -78,7 +78,7 @@ class save_service {
     final users = FirebaseFirestore.instance
         .collection('users')
         .doc(currentUser?.uid)
-        .collection(session)
+        .collection('session')
         .doc(now.toString());
     final json = {
       'date & time': now,
@@ -95,7 +95,7 @@ class save_service {
     await FirebaseFirestore.instance
         .collection('users')
         .doc(currentUser?.uid)
-        .collection(session)
+        .collection('session')
         .get()
         .then((event) {
       for (var doc in event.docs) {
