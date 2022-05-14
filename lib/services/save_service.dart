@@ -16,8 +16,8 @@ class save_service {
     String energy = "";
     String firebase_data = "";
 
-    DatabaseReference ref = FirebaseDatabase.instance
-        .ref("/users/${currentUser?.uid}/sessions/$session");
+    DatabaseReference ref =
+        FirebaseDatabase.instance.ref("/users/${currentUser?.uid}");
 
     DatabaseReference refLocation = FirebaseDatabase.instance
         .ref("/users/${currentUser?.uid}/sessions/$session/ski_resort");
@@ -101,9 +101,7 @@ class save_service {
       for (var doc in event.docs) {
         firebase_data = "${doc.id} => ${doc.data()}";
       }
-    });
-    if (firebase_data != "") {
       ref.remove();
-    }
+    });
   }
 }

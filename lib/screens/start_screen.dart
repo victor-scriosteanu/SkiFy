@@ -1,16 +1,17 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_place/google_place.dart';
 import 'package:skify1/screens/history_screen.dart';
 import 'package:skify1/screens/signin_screen.dart';
-import 'package:skify1/services/energy_service.dart';
+
 import 'package:skify1/services/ski_resort_service.dart';
 import 'package:uuid/uuid.dart';
 import '../reusable_widgets/reusable_widget.dart';
 import '../utils/color_utils.dart';
 import 'stats_screen.dart';
-import 'package:skify1/services/energy_service.dart';
 
 class StartScreen extends StatefulWidget {
   const StartScreen({Key? key}) : super(key: key);
@@ -27,9 +28,18 @@ class _StartScreenState extends State<StartScreen> {
   final stopwatch = Stopwatch();
   var currentUser = FirebaseAuth.instance.currentUser;
   var session;
+  late GooglePlace googlePlace;
+  List<AutocompletePrediction> predictions = [];
+  DetailsResult? position;
+  late FocusNode focusNode;
+  Timer? _debounce;
+
   @override
   void initState() {
     super.initState();
+    String apiKey = 'AIzaSyAeU5N_FI3VscF7Rgzr9IxmNwPVRjwfqRk';
+    googlePlace = GooglePlace(apiKey);
+    focusNode = FocusNode();
     _locationController.addListener(() {
       setState(() {
         isButtonActive = _locationController.text.isNotEmpty;
@@ -41,6 +51,17 @@ class _StartScreenState extends State<StartScreen> {
   void dispose() {
     _locationController.dispose();
     super.dispose();
+    focusNode.dispose();
+  }
+
+  void autoCompleteSearch(String value) async {
+    var result = await googlePlace.autocomplete.get(value);
+    if (result != null && result.predictions != null && mounted) {
+      print(result.predictions!.first.description);
+      setState(() {
+        predictions = result.predictions!;
+      });
+    }
   }
 
   @override
@@ -61,6 +82,10 @@ class _StartScreenState extends State<StartScreen> {
             child: Column(
               children: <Widget>[
                 TextField(
+                  style: TextStyle(color: Colors.white),
+                  cursorColor: Colors.white.withOpacity(0.5),
+                  autofocus: false,
+                  focusNode: focusNode,
                   controller: _locationController,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(
@@ -71,13 +96,56 @@ class _StartScreenState extends State<StartScreen> {
                     labelStyle: TextStyle(color: Colors.white.withOpacity(0.9)),
                     filled: true,
                     floatingLabelBehavior: FloatingLabelBehavior.never,
-                    fillColor: Colors.white.withOpacity(0.3),
+                    fillColor: Colors.white.withOpacity(0.2),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0),
                         borderSide: const BorderSide(
                             width: 0, style: BorderStyle.none)),
                   ),
+                  onChanged: (value) {
+                    if (_debounce?.isActive ?? false) _debounce!.cancel();
+                    _debounce = Timer(Duration(milliseconds: 1000), () {
+                      if (value.isNotEmpty) {
+                        autoCompleteSearch(value);
+                      } else {
+                        setState(() {
+                          predictions = [];
+                          position = null;
+                        });
+                      }
+                    });
+                  },
                 ),
+                ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: predictions.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        leading: const Icon(
+                          Icons.place_outlined,
+                          color: Colors.white,
+                        ),
+                        title: Text(predictions[index].description.toString()),
+                        textColor: Colors.white,
+                        onTap: () async {
+                          final placeId = predictions[index].placeId!;
+                          final details =
+                              await googlePlace.details.get(placeId);
+                          if (details != null &&
+                              details.result != null &&
+                              mounted) {
+                            if (focusNode.hasFocus) {
+                              setState(() {
+                                position = details.result;
+                                _locationController.text =
+                                    details.result!.name!;
+                                predictions = [];
+                              });
+                            }
+                          }
+                        },
+                      );
+                    })
               ],
             ),
           ),

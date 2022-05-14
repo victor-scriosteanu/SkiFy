@@ -35,6 +35,11 @@ class total_distance {
 
     DatabaseEvent eventLastLat = await refLastLat.once();
 
+    DatabaseReference refTime = FirebaseDatabase.instance
+        .ref("/users/${currentUser?.uid}/sessions/$session/time");
+
+    DatabaseEvent eventTime = await refTime.once();
+
     if (eventLastLong.snapshot.value == null ||
         eventLastLat.snapshot.value == null) {
       refLastLong.set(long);
@@ -59,8 +64,17 @@ class total_distance {
         if (state) {
           distance = distance + currentDistance;
           refDistance.set(distance);
+          if (eventTime.snapshot.value.toString() == "00:00:00" ||
+              eventTime.snapshot.value.toString() == "00:00:01") {
+            refDistance.set(0.0);
+          }
         }
-        return distance;
+        if (eventTime.snapshot.value.toString() == "00:00:00" ||
+            eventTime.snapshot.value.toString() == "00:00:01") {
+          return 0.0;
+        } else {
+          return distance;
+        }
       }
     }
   }
