@@ -44,11 +44,11 @@ dependencies:
   uuid: ^3.0.6
   cloud_firestore: ^3.1.14
   health: ^3.4.4
-  google_maps_flutter: ^2.1.5
   geolocator: ^8.2.1
   http: ^0.13.4
   google_place: ^0.4.7
   package_info_plus_web: ^1.0.5
+  google_maps_flutter: ^2.1.5
 
 dev_dependencies:
   flutter_test:

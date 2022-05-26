@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_place/google_place.dart';
 import 'package:skify1/screens/history_screen.dart';
+import 'package:skify1/screens/map_screen.dart';
 import 'package:skify1/screens/signin_screen.dart';
 
 import 'package:skify1/services/ski_resort_service.dart';
@@ -67,89 +68,108 @@ class _StartScreenState extends State<StartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        decoration: BoxDecoration(
-            gradient: LinearGradient(colors: [
-          hexStringToColor("0080fe"),
-          hexStringToColor("00308a")
-        ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.fromLTRB(
-                20, MediaQuery.of(context).size.height * 0.2, 20, 0),
-            child: Column(
-              children: <Widget>[
-                TextField(
-                  style: TextStyle(color: Colors.white),
-                  cursorColor: Colors.white.withOpacity(0.5),
-                  autofocus: false,
-                  focusNode: focusNode,
-                  controller: _locationController,
-                  decoration: InputDecoration(
-                    prefixIcon: const Icon(
-                      Icons.place,
-                      color: Colors.white70,
-                    ),
-                    labelText: "Ski Resort/Location",
-                    labelStyle: TextStyle(color: Colors.white.withOpacity(0.9)),
-                    filled: true,
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    fillColor: Colors.white.withOpacity(0.2),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide: const BorderSide(
-                            width: 0, style: BorderStyle.none)),
-                  ),
-                  onChanged: (value) {
-                    if (_debounce?.isActive ?? false) _debounce!.cancel();
-                    _debounce = Timer(Duration(milliseconds: 1000), () {
-                      if (value.isNotEmpty) {
-                        autoCompleteSearch(value);
-                      } else {
-                        setState(() {
-                          predictions = [];
-                          position = null;
-                        });
-                      }
-                    });
-                  },
-                ),
-                ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: predictions.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        leading: const Icon(
-                          Icons.place_outlined,
-                          color: Colors.white,
+      body: Stack(
+        alignment: Alignment.bottomRight,
+        children: [
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            decoration: BoxDecoration(
+                gradient: LinearGradient(colors: [
+              hexStringToColor("0080fe"),
+              hexStringToColor("00308a")
+            ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(
+                    20, MediaQuery.of(context).size.height * 0.2, 20, 0),
+                child: Column(
+                  children: <Widget>[
+                    TextField(
+                      style: TextStyle(color: Colors.white),
+                      cursorColor: Colors.white.withOpacity(0.5),
+                      autofocus: false,
+                      focusNode: focusNode,
+                      controller: _locationController,
+                      decoration: InputDecoration(
+                        prefixIcon: const Icon(
+                          Icons.place,
+                          color: Colors.white70,
                         ),
-                        title: Text(predictions[index].description.toString()),
-                        textColor: Colors.white,
-                        onTap: () async {
-                          final placeId = predictions[index].placeId!;
-                          final details =
-                              await googlePlace.details.get(placeId);
-                          if (details != null &&
-                              details.result != null &&
-                              mounted) {
-                            if (focusNode.hasFocus) {
-                              setState(() {
-                                position = details.result;
-                                _locationController.text =
-                                    details.result!.name!;
-                                predictions = [];
-                              });
-                            }
+                        labelText: "Ski Resort/Location",
+                        labelStyle:
+                            TextStyle(color: Colors.white.withOpacity(0.9)),
+                        filled: true,
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                        fillColor: Colors.white.withOpacity(0.2),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                            borderSide: const BorderSide(
+                                width: 0, style: BorderStyle.none)),
+                      ),
+                      onChanged: (value) {
+                        if (_debounce?.isActive ?? false) _debounce!.cancel();
+                        _debounce = Timer(Duration(milliseconds: 200), () {
+                          if (value.isNotEmpty) {
+                            autoCompleteSearch(value);
+                          } else {
+                            setState(() {
+                              predictions = [];
+                              position = null;
+                            });
                           }
-                        },
-                      );
-                    })
-              ],
+                        });
+                      },
+                    ),
+                    ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: predictions.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            leading: const Icon(
+                              Icons.place_outlined,
+                              color: Colors.white,
+                            ),
+                            title:
+                                Text(predictions[index].description.toString()),
+                            textColor: Colors.white,
+                            onTap: () async {
+                              final placeId = predictions[index].placeId!;
+                              final details =
+                                  await googlePlace.details.get(placeId);
+                              if (details != null &&
+                                  details.result != null &&
+                                  mounted) {
+                                if (focusNode.hasFocus) {
+                                  setState(() {
+                                    position = details.result;
+                                    _locationController.text =
+                                        details.result!.name!;
+                                    predictions = [];
+                                  });
+                                }
+                              }
+                            },
+                          );
+                        }),
+                  ],
+                ),
+              ),
             ),
           ),
-        ),
+          Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: FloatingActionButton(
+              backgroundColor: Colors.blue,
+              heroTag: null, //Must be null to avoid hero animation errors
+              child: const Icon(Icons.my_location_sharp, size: 35),
+              onPressed: () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => MapScreen()));
+              },
+            ),
+          ),
+        ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: SizedBox(
@@ -158,7 +178,8 @@ class _StartScreenState extends State<StartScreen> {
         child: FittedBox(
           child: FloatingActionButton(
               onPressed: isButtonActive ? () => submitData() : null,
-              child: skiButtonWidget('assets/images/skis.png', isButtonActive),
+              child:
+                  skiButtonWidget('assets/images/skiMan.png', isButtonActive),
               backgroundColor: isButtonActive
                   ? Colors.blue
                   : Color.fromARGB(255, 26, 113, 184)),

@@ -1,9 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.skify1">
+   <uses-permission android:name="android.permission.ACCESSS_FINE_LOCATION"/>
    <application
         android:label="skify1"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyDW-qr42czZnr9MpEavpBFRTkJZMHF1ALQ"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
