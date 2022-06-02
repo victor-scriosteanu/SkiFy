@@ -52,7 +52,7 @@ class SessionCard extends StatelessWidget {
                   Text('vertical: ${_session.vertical!}',
                       style: const TextStyle(color: Colors.white)),
                   Spacer(),
-                  Text('ski time: ${_session.time!}',
+                  Text('time: ${_session.time!}',
                       style: const TextStyle(color: Colors.white)),
                 ],
               ),
