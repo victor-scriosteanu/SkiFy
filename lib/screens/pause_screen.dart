@@ -425,12 +425,7 @@ class _PauseScreenState extends State<PauseScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                IconButton(
-                    icon: const Icon(Icons.history, size: 40),
-                    onPressed: () {}),
                 const SizedBox(width: 40), // The dummy child
-                IconButton(
-                    icon: const Icon(Icons.map, size: 40), onPressed: () {}),
               ],
             ),
           )),

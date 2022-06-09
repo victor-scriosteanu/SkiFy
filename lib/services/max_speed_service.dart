@@ -12,8 +12,8 @@ class max_speed {
     DatabaseEvent event = await ref.once();
 
     if (event.snapshot.value == null) {
-      ref.set(speed);
-      return speed;
+      ref.set(0);
+      return 0;
     } else {
       if (state) {
         String maxSpeedString = event.snapshot.value.toString();

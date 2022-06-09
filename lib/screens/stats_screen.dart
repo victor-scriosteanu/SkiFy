@@ -103,7 +103,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
     Duration elapsed = widget.stopwatch.elapsed;
     final now = elapsed;
-    print((widget.stopwatch.elapsedMilliseconds / 1000).round());
     if (currentUser != null) {
       //print(currentUser.uid);
     }
@@ -384,12 +383,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                IconButton(
-                    icon: const Icon(Icons.history, size: 40),
-                    onPressed: () {}),
                 SizedBox(width: 40), // The dummy child
-                IconButton(
-                    icon: const Icon(Icons.map, size: 40), onPressed: () {}),
               ],
             ),
           )),

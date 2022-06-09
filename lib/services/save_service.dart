@@ -24,7 +24,6 @@ class save_service {
     DatabaseEvent eventLocation = await refLocation.once();
     if (eventLocation.snapshot.value != null) {
       location = eventLocation.snapshot.value.toString();
-      print(location);
     }
 
     DatabaseReference refDistance = FirebaseDatabase.instance
@@ -32,7 +31,6 @@ class save_service {
     DatabaseEvent eventDistance = await refDistance.once();
     if (eventDistance.snapshot.value != null) {
       distance = eventDistance.snapshot.value.toString();
-      print(distance);
     }
 
     DatabaseReference refMaxSpeed = FirebaseDatabase.instance
@@ -40,7 +38,6 @@ class save_service {
     DatabaseEvent eventMaxSpeed = await refMaxSpeed.once();
     if (eventMaxSpeed.snapshot.value != null) {
       maxSpeed = eventMaxSpeed.snapshot.value.toString();
-      print(maxSpeed);
     }
 
     DatabaseReference refVertical = FirebaseDatabase.instance
@@ -48,7 +45,6 @@ class save_service {
     DatabaseEvent eventVertical = await refVertical.once();
     if (eventVertical.snapshot.value != null) {
       vertical = eventVertical.snapshot.value.toString();
-      print(vertical);
     }
 
     DatabaseReference refTime = FirebaseDatabase.instance
@@ -56,7 +52,6 @@ class save_service {
     DatabaseEvent eventTime = await refTime.once();
     if (eventTime.snapshot.value != null) {
       time = eventTime.snapshot.value.toString();
-      print(time);
     }
 
     DatabaseReference refRuns = FirebaseDatabase.instance
@@ -64,7 +59,6 @@ class save_service {
     DatabaseEvent eventRuns = await refRuns.once();
     if (eventRuns.snapshot.value != null) {
       runs = eventRuns.snapshot.value.toString();
-      print(runs);
     }
 
     DatabaseReference refEnergy = FirebaseDatabase.instance
@@ -72,7 +66,6 @@ class save_service {
     DatabaseEvent eventEnergy = await refEnergy.once();
     if (eventEnergy.snapshot.value != null) {
       energy = eventEnergy.snapshot.value.toString();
-      print(energy);
     }
 
     final users = FirebaseFirestore.instance

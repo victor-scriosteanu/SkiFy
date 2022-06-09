@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:skify1/screens/start_screen.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({Key? key}) : super(key: key);
@@ -27,7 +28,7 @@ class _MapScreenState extends State<MapScreen> {
 // ignore: prefer_const_constructors
   static final CameraPosition initialLocation = CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 200,
+    zoom: 18,
   );
 
   Future<Uint8List> getMarker() async {
@@ -78,7 +79,7 @@ class _MapScreenState extends State<MapScreen> {
                   target:
                       LatLng(newLocalData.latitude!, newLocalData.longitude!),
                   tilt: 0,
-                  zoom: 20)));
+                  zoom: 19)));
           updateMarkerAndCircle(newLocalData, imageData);
         }
       });
@@ -111,8 +112,15 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Live tracking location'),
-      ),
+          title: Text('Live tracking location'),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            //onPressed:() => Navigator.pop(context, false),
+            onPressed: () {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => StartScreen()));
+            },
+          )),
       body: Stack(children: <Widget>[
         GoogleMap(
           zoomControlsEnabled: false,
@@ -145,7 +153,6 @@ class _MapScreenState extends State<MapScreen> {
                 backgroundColor: Colors.blue,
                 onPressed: () {
                   _changeMapType();
-                  print('Changing the Map Type');
                 }),
           ]),
         ),

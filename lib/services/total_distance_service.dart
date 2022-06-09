@@ -19,7 +19,7 @@ class total_distance {
     var currentUser = FirebaseAuth.instance.currentUser;
     // ignore: unused_local_variable
     var currentDistance = 0.0;
-    print(state);
+
     DatabaseReference refDistance = FirebaseDatabase.instance
         .ref("/users/${currentUser?.uid}/sessions/$session/distance");
 

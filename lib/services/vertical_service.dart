@@ -29,7 +29,7 @@ class vertical_service {
         String lastVerticalString = eventLastVertical.snapshot.value.toString();
         double lastVertical = double.parse(lastVerticalString);
         if (state) {
-          if (altitude! < lastVertical) {
+          if (altitude! < lastVertical - 10) {
             vertical = vertical + (lastVertical - altitude);
             ref.set(vertical);
             refLastVertical.set(altitude);

@@ -42,21 +42,17 @@ class energy_service {
       var energy = 0.0;
       // print the results
       _healthDataList.forEach((x) {
-        print(x);
-        print(x.value);
         energy = energy + x.value;
       });
       if (energy == 0) {
         ref.set((time.elapsedMilliseconds / 1000 * 0.1).round());
         return ((time.elapsedMilliseconds / 1000 * 0.1).round());
       }
-      print(energy.round());
       ref.set(energy.round());
       return energy.round();
       // update the UI to display the results
 
     } else {
-      print("Authorization not granted");
       ref.set((time.elapsedMilliseconds / 1000 * 0.1).round());
       return ((time.elapsedMilliseconds / 1000 * 0.1).round());
     }
