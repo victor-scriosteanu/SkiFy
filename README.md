@@ -1,16 +1,91 @@
-# skify1
+# SkiFy
 
-A new Flutter project.
+Ski Tracking Cross-Platform Mobile App
 
-## Getting Started
+## Abstract
 
-This project is a starting point for a Flutter application.
+This project is a mobile application whose goal is to improve in general the quality time of skiers and snowboarders as well as provide a precise analysis of skiing statistics. The app should be able to calculate specific metrics like maximum speed, total distance skied, and calories burned besides many other functionalities. Compared to other similar apps, Skify is a cross-platform native-based app prioritizing battery efficiency and ability to calculate precise metrics such as energy, retrieved from smartwatch health measurements in real-time.
 
-A few resources to get you started if this is your first Flutter project:
+## Implementation
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+### App Icon
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+App IconIcon design is a crucial phase that requires an in-depth brainstorming and knowledge of not only what the business is about but also the target audience. A well-designed and appealing icon can attract a large number of visitors and persuade them to download and utilise my app, as well as acting as a signal to app store marketplaces that my mobile app is well-received. I decided to go with a minimal design, because is not only easily recognizable but also very simple to understand. It makes it very simple for the audience to register the design in their memory. For designing the logo and the icon I used Adobe Illustrator.
+
+### Splash Screen
+
+Splash ScreenThe Login Screen is loaded up when the user first launches the programme. It takes approximately 2080 milliseconds for the app to load the interface of the Sign In Menu. According to studies, it takes 50 milliseconds for consumers to determine whether or not to stay on your app. To overcome this issue, I created a splash screen for my app. Splash screens are vital because they set the tone for how the consumers will view and interact with the app. To maximize performance, I used a native package which automatically generates iOS and Android code for this native splash screen background colour and splash image. For the splash screen image, I used the Skify logo which was design in Adobe Illustrator and is also used for the icon of the app. It also supports dark mode and platform-specific options. While the SignInScreen widget is processed in the background the splash screen will be displayed for the entire duration of the process.
+
+### Sign In Page 
+
+Sign In PageWhen the app is opened, the user is taken to the sign in page.
+
+The Sign In or Login In page is created by the stateful widget SignInScreen inside the signin_screen.dart file. Both user-input text fields have a placeholder with 90% opacity. The password text field has the function to hide the credentials inputted by the user. Both the text fields and the Sign In button are stored separately in reusable_widget.dart file for further reusability in the code. 
+
+Because the database includes sensitive user information, only approved accounts should be able to access it. This is accomplished using Firebase's Authentication SDK.
+
+Since the Firebase Authentication SDK has restrictions that only allow read and write access through the SDK, the Firebase Authentication SDK is tightly integrated with database access. The SDK receives user authentication credentials and validates them; if they are legitimate, the SDK will enable access to the database; if they are invalid (for example, credentials have been revoked server side), no access to the database will be permitted.
+
+The structure of the entire app is stored as a widget tree. The widget tree is where the user interface is built; it's where the widgets are placed within each other to create basic and complex layouts. For e.g., we can see in the Sign In widget tree that a scaffold widget, which is a flutter widget used to implement the basic material design visual layout structure, encapsulates a container followed by a scroll view, padding, column,  texts, text fields, and buttons. This type of architecture will be used predominantly within the app for all pages. 
+
+Different error messages will be displayed on the screen, depending on the wrong credentials the user might enter:
+- There is no user record corresponding to this identifier.
+- The password is invalid.
+- The email address is badly formatted.
+
+### Sign Up Page
+
+A user must first establish an account in order to utilise the application. The Sign-Up page makes use of the reusable widgets from reusable_widget.dart file generating the text fields and button. Similar to sign in page, a function displays different error messages accordingly with the user badly formatted inputs. 
+
+When an user creates an account, the credentials are saved in the cloud. Using the Firebase portal, the administrator can see the email address, the date when the account was created, the last signed in date, the user UID, which is an unique key item generated by Firebase when an account is first created. 
+
+On the other hand, the administrator  has no access to the password. To hash account passwords, I created a scrypt in order to encode passwords. Even if a password is submitted using a different technique, the password will be rehashed using the scrypt, the first time the account signs in successfully. 
+
+### Reset password
+
+The mobile device password reset feature allows a mobile user to reset their password within the Skify application. I used email verification as a method for password reset. It reduces friction by allowing users to type in their email address quickly and easily, and it protects their information by allowing only the customer access to their inbox.
+
+The password reset page make use of reusable_widget.dart file to generate text fields and button like previous pages. Similar to the other two screens a function displays different error messages accordingly with the user badly formatted inputs. 
+
+To reset a user password, the sendPasswordResetEmail() method is called on the FirebaseAuth object; this method accepts a String parameter which serves as the user email. Firebase handles password resets by sending a reset password link to the user email. The format of the email was modified to suit our needs.
+
+### Keep user logged in
+
+The Keep me logged in functionality will be generated by authStateChanges() method (as shown in the code below). The user subscribes to this state in real-time using Firebase Auth and a Stream. When the stream is called, it returns an instant event indicating the user's current authentication status, as well as future events whenever the authentication state changes.
+
+Events are fired when the following occurs:
+- following the registration of the listener;
+- when a user has successfully logged in;
+- when the current user is no longer logged in.
+
+### Auto-complete location
+
+Before starting a session, the user is required to enter the ski resort or custom location, auto-completing locations as the user writes. The method autoCompleteSearch() takes a string and automatically fills in the names and/or addresses of first 5 places matched to the input as the user types. It requires a package called google_place which searches through the Google’s database where all the names of locations are stored.
+
+The method is called if the value of the text changes updating the locations 200 milliseconds after the value modified.
+
+### Start skiing
+
+The button ‘Start skiing’ is locked if the location text field is empty. This implies that a location must be selected in order for the session to begin. The method submitData() is called when the button is active, and it takes 3 variables and passes them to the next page when the app starts recording user measurements. The variables are:
+- stopwatch which is start a stopwatch the moment the button is pressed;
+- skiResort which takes the location entered by the user;
+- session which generates a time-based 36-character unique id.
+
+### Measurements tracking system
+
+Right before navigating to the measurements screen the stopwatch which was passed through submitData() method from the Main Menu page began counting time. The stats page contains 6 different metrics and 2 states. Permission of accessing the geolocation of the device is requested from the user in order to start recording the metrics. The play state is automatically triggered by navigating from the Main Menu. The pause state can be reached from play state and only from there the session can be stopped and saved by the user.
+
+### Map
+
+The map can be accessed from the Main Menu page. Before accessing the map, the app asks for permission to access user’s location. I used the Google Maps Flutter plugin to add maps that are based on Google Maps data. The plugin takes care of accessing Google Maps servers, displaying maps, and responding to user actions like clicks, zooms, and drags. The method getCurrentLocation() accesses user’s current location and change the position of the camera to the respective coordinates.
+
+### History
+
+The History page helps keeping track of past activity sessions created by the user. The getList() method fetches data from Firestore Database, creating a list with tracking sessions. The list is structured in containers, displaying the location of the ski resort, date of creation, and all 6 measurements.
+
+### Signing out
+
+Signing out informs the system that the current user wishes to end the login session. The action is triggered by the signOut() method in the Main Menu. After signing out, the app will navigate to the Sign In page and display a message confirming that the user logged out of the system successfully. After logging out and closing the app, the user cannot take advantage of the Keep me logged in functionality when opening the app again.
+
+
+
